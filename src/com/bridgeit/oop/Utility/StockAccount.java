@@ -42,7 +42,8 @@ public class StockAccount {
 			number.put("$", "1");
 			user.put("number", number);
 			jsonArray.add(user);
-			save(jsonArray);
+			save(jsonArray,
+					"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 			System.out.println("User With Name '" + userName + "', Added Successfully..");
 
 		} else {
@@ -50,57 +51,139 @@ public class StockAccount {
 		}
 	}
 
-	public void buy(int amount, String symbol) throws IOException, ParseException {
-		Scanner scanner=new Scanner(System.in);
+	public void buy(int amount, String symbol) throws Exception {
+		Scanner scanner = new Scanner(System.in);
 		FileReader userFile = new FileReader(
 				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		FileReader companyFile = new FileReader(
 				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 		JSONArray userArray = (JSONArray) new JSONParser().parse(userFile);
 		JSONArray companyArray = (JSONArray) new JSONParser().parse(companyFile);
-		boolean status=false;
+		boolean status = false;
+		int shareCount = 0;
 		System.out.println("Enter your name to verify existing user..");
-		String userName=scanner.next();
+		String userName = scanner.next();
 		for (Object object : userArray) {
 			JSONObject jsonObject = (JSONObject) object;
 			String name = (String) jsonObject.get("name");
+			int userAmount = Integer.parseInt((String) jsonObject.get("amount"));
+			if (name.equals(userName) && amount <= userAmount) {
+				status = true;
+			}
+		}
+		if (status) {
+			for (Object object : userArray) {
+				JSONObject userObject = (JSONObject) object;
+				String name = (String) userObject.get("name");
+				int userAmount = Integer.parseInt((String) userObject.get("amount"));
+
+				if (name.equals(userName)) {
+
+					for (Object object1 : companyArray) {
+						JSONObject companyObject = (JSONObject) object1;
+						String matchSymbol = (String) companyObject.get("symbol");
+						if (matchSymbol.equals(symbol)) {
+							int price = Integer.parseInt((String) companyObject.get("price"));
+							int number = Integer.parseInt((String) companyObject.get("number"));
+							shareCount = amount / price;
+							number = number - shareCount;
+							String temp = Integer.toString(number);
+							companyObject.replace("number", temp);
+							userAmount -= amount;
+							String tempAmount = Integer.toString(userAmount);
+							userObject.replace("amount", tempAmount);
+							JSONObject numberObject = new JSONObject();
+							numberObject = (JSONObject) userObject.get("number");
+							int symbolNumber = Integer.parseInt((String) numberObject.get(symbol));
+							symbolNumber += shareCount;
+							String tempShare = Integer.toString(symbolNumber);
+							numberObject.replace(symbol, tempShare);
+							System.out.println("Transaction Successful..");
+
+						}
+					}
+
+				}
+			}
+		} else {
+			System.out.println("You Dont have Enough amount to perform this transaction..");
+		}
+
+		save(userArray, "/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+		save(companyArray,
+				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+	}
+
+	public void sell(int amount, String symbol) throws Exception {
+		Scanner scanner = new Scanner(System.in);
+		FileReader userFile = new FileReader(
+				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+		FileReader companyFile = new FileReader(
+				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+		JSONArray userArray = (JSONArray) new JSONParser().parse(userFile);
+		JSONArray companyArray = (JSONArray) new JSONParser().parse(companyFile);
+		boolean status = false;
+		int shareCount = 0;
+		System.out.println("Enter your name to verify existing user..");
+		String userName = scanner.next();
+		for (Object object : userArray) {
+			JSONObject jsonObject = (JSONObject) object;
+			String name = (String) jsonObject.get("name");
+
 			if (name.equals(userName)) {
 				status = true;
 			}
 		}
-		if(status){
+		if (status) {
 			for (Object object : userArray) {
 				JSONObject userObject = (JSONObject) object;
-				String name=(String) userObject.get("name");
+				String name = (String) userObject.get("name");
+				int userAmount = Integer.parseInt((String) userObject.get("amount"));
+
+				JSONObject numberObject = new JSONObject();
+				numberObject = (JSONObject) userObject.get("number");
+				int symbolNumber = Integer.parseInt((String) numberObject.get(symbol));
 				if (name.equals(userName)) {
-				
+
 					for (Object object1 : companyArray) {
 						JSONObject companyObject = (JSONObject) object1;
-						String matchSymbol=(String) companyObject.get("symbol");
-						if(matchSymbol.equals(symbol)){
-							int price=Integer.parseInt((String)companyObject.get("price"));
-							int number=Integer.parseInt((String)companyObject.get("number"));
-							int shareCount=amount/price;
-							
+						String matchSymbol = (String) companyObject.get("symbol");
+						if (matchSymbol.equals(symbol)) {
+							if (symbolNumber > amount / Integer.parseInt((String) companyObject.get("price"))) {
+								int price = Integer.parseInt((String) companyObject.get("price"));
+								int number = Integer.parseInt((String) companyObject.get("number"));
+								shareCount = amount / price;
+								number = number + shareCount;
+								String temp = Integer.toString(number);
+								companyObject.replace("number", temp);
+								userAmount += amount;
+								String tempAmount = Integer.toString(userAmount);
+								userObject.replace("amount", tempAmount);
+								symbolNumber -= shareCount;
+								String tempShare = Integer.toString(symbolNumber);
+								numberObject.replace(symbol, tempShare);
+								System.out.println("Transaction Successful..");
+
+							} else {
+								System.out.println("You Dont Have Enough Shares to get That much money..");
+							}
 						}
+					}
+
 				}
-			}	
-			}	
-		}else{
-			System.out.println("You are name is not exist..please make a new registration...");
+			}
+		} else {
+			System.out.println("You Dont have Enough amount to perform this transaction..");
 		}
-		
 
+		save(userArray, "/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+		save(companyArray,
+				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 	}
 
-	public void sell(int amount, String symbol) {
-
-	}
-
-	public void save(Object jsonArray) throws Exception {
+	public void save(Object jsonArray, String file) throws Exception {
 		JSONArray array = (JSONArray) jsonArray;
-		FileWriter fileWriter = new FileWriter(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+		FileWriter fileWriter = new FileWriter(file);
 		fileWriter.write(array.toJSONString());
 		fileWriter.flush();
 		fileWriter.close();

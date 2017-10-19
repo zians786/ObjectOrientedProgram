@@ -1,1 +1,1 @@
-[{"name":"zian","amount":"10000","number":[{"75"}],"symbol":[{"@"}]},{"name":"faisal","amount":"20000","number":[{"10"}],"symbol":[{"#"}]},{"name":"imran","amount":"30000","number":[{"30"}],"symbol":[{"$"}]}]
+[{"number":{"@":"75","#":"1","$":"1"},"amount":"10000","name":"zian"},{"number":{"@":"1","#":"10","$":"5"},"amount":"20000","name":"faisal"},{"number":{"@":"1","#":"2","$":"30"},"amount":"30000","name":"imran"},{"number":{"@":"1","#":"1","$":"1"},"amount":"30000","name":"obaid"}]

@@ -12,23 +12,28 @@ public class Commercial {
 	public static void main(String[] args) throws Exception {
 		Scanner scanner = new Scanner(System.in);
 		StockAccount stockAccount = new StockAccount();
-		int choice;
+		int choice, amount;
+		String name, symbol;
 		do {
 			System.out.println("1.Add User\n2.Buy Share\n3.Sell Share\n4.Display Report\n5.Exit\nEnter Your Choice : ");
 			choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
 				System.out.println("Enter User Name : ");
-				String name = scanner.next();
+				name = scanner.next();
 				new StockAccount(name);
 				break;
 			case 2:
 				System.out.println("Enter Amount and Share Symbol.  e.g '@' '#' '$'");
-				int amount = scanner.nextInt();
-				String symbol=scanner.next();
+				amount = scanner.nextInt();
+				symbol = scanner.next();
 				stockAccount.buy(amount, symbol);
 				break;
 			case 3:
+				System.out.println("Enter Amount and Share Symbol.  e.g '@' '#' '$'");
+				amount = scanner.nextInt();
+				symbol = scanner.next();
+				stockAccount.sell(amount, symbol);
 				break;
 
 			case 4:
