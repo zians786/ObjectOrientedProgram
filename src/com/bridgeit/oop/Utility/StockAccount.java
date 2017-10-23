@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -73,6 +75,7 @@ public class StockAccount {
 		}
 		if (status) {
 			for (Object object : userArray) {
+				
 				JSONObject userObject = (JSONObject) object;
 				String name = (String) userObject.get("name");
 				int userAmount = Integer.parseInt((String) userObject.get("amount"));
@@ -89,6 +92,7 @@ public class StockAccount {
 							number = number - shareCount;
 							String temp = Integer.toString(number);
 							companyObject.replace("number", temp);
+							companyObject.replace("date", new Date(System.currentTimeMillis()).toString());
 							userAmount -= amount;
 							String tempAmount = Integer.toString(userAmount);
 							userObject.replace("amount", tempAmount);
@@ -99,7 +103,7 @@ public class StockAccount {
 							String tempShare = Integer.toString(symbolNumber);
 							numberObject.replace(symbol, tempShare);
 							System.out.println("Transaction Successful..");
-
+							System.out.println(new Date(System.currentTimeMillis()).toString());
 						}
 					}
 
@@ -156,6 +160,7 @@ public class StockAccount {
 								number = number + shareCount;
 								String temp = Integer.toString(number);
 								companyObject.replace("number", temp);
+								companyObject.replace("date", new Date(System.currentTimeMillis()).toString());
 								userAmount += amount;
 								String tempAmount = Integer.toString(userAmount);
 								userObject.replace("amount", tempAmount);
@@ -163,7 +168,7 @@ public class StockAccount {
 								String tempShare = Integer.toString(symbolNumber);
 								numberObject.replace(symbol, tempShare);
 								System.out.println("Transaction Successful..");
-
+								System.out.println(new Date(System.currentTimeMillis()).toString());
 							} else {
 								System.out.println("You Dont Have Enough Shares to get That much money..");
 							}
@@ -231,4 +236,61 @@ public class StockAccount {
 		System.out.println();
 
 	}
+	
+	
+	public void addCompany(LinkedListUtility linkCompany) throws Exception{
+		Scanner scanner=new Scanner(System.in);
+			
+		JSONObject companyObject=new JSONObject();
+		
+		System.out.println("Enter Symbol");
+		companyObject.put("symbol", scanner.next());
+		
+		System.out.println("Enter Price of per Share");
+		companyObject.put("price", scanner.next());
+		
+		System.out.println("Enter number of share");
+		companyObject.put("number", scanner.next());
+		
+		Date date=new Date(System.currentTimeMillis());
+		 String stringDate=date.toString();
+		 companyObject.put("date", stringDate);
+		linkCompany.insertAtEnd(companyObject);
+		
+	}
+
+	public void removeCompany(LinkedListUtility linkCompany) {
+		System.out.println("Enter The Symbol of share you want to delete");
+		String symbol=new Scanner(System.in).next();
+		int size=linkCompany.size();
+		boolean status=true;
+		for(int i=1;i<=size;i++){
+			JSONObject dataObject=new JSONObject();
+			dataObject=(JSONObject) linkCompany.dataAtPos(i);
+		
+			if(symbol.equals((String) dataObject.get("symbol"))){
+				linkCompany.deleteAtPos(i);
+				status=false;
+			}
+		}
+		if(status){
+			System.out.println("Symbol of share not Found");
+		}
+	}
+
+	public void writeToJSON(LinkedListUtility linkCompany,String file) throws Exception {
+	JSONArray array=new JSONArray();
+	int size=linkCompany.size();
+	
+		while(!linkCompany.isEmpty()){
+			JSONObject data=new JSONObject();
+			data=(JSONObject) linkCompany.deleteAtPos(size);
+			array.add(data);
+			size--;
+		}
+		save(array,file);
+	}
+	
+	
+	
 }

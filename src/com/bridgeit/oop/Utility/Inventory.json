@@ -1,12 +1,1 @@
-{"Inventory":[{"name":"Rice"
-"weight":30
-"price_per_kg":40
-},
-{"name":"Pulses"
-"weight":50
-"price_per_kg":30
-},
-{"name":"Wheat"
-"weight":50
-"price_per_kg":30
-}]}
+[{"price_per_kg":40,"name":"rice","weight":30},{"price_per_kg":30,"name":"pulses","weight":50},{"price_per_kg":30,"name":"wheat","weight":50},{"price_per_kg":20,"name":"corn","weight":20}]
