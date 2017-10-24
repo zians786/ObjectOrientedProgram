@@ -5,6 +5,10 @@ import java.util.Scanner;
 import com.bridgeit.oop.Utility.Utility;
 
 public class InventoryManagement {
+	
+	static{
+		System.out.println("hello java");
+	}
 
 	public static void main(String[] args) throws Exception {
 		Utility utility=new Utility();

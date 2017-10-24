@@ -7,13 +7,13 @@ import com.bridgeit.oop.Utility.Utility;
 
 public class ClinicManagement {
 
-public static void main(String[] args) throws ParseException {
+public static void main(String[] args) throws Exception {
 		Utility utility=new Utility();
-		Scanner sc = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		while (true) {
 		System.out.println("Welcome To Clinic Management System..\n1.Add Doctors\n2.Add Patients\n3.Search Doctor\n4.Search Patient\n5.Take an appoitment\n6.Exit");
 		System.out.println("Enter Your Choice...");
-		int choice = sc.nextInt();
+		int choice = scanner.nextInt();
 		switch (choice) {
 		case 1:
 			utility.addDoctors();
@@ -28,11 +28,10 @@ public static void main(String[] args) throws ParseException {
 			utility.searchPatient();
 		break;
 		case 5:
-			utility.stringToDate("22/01/1996");
-			//utility.takeAnAppointment();
+			utility.takeAnAppointment();
 		break;
 		case 6:
-			System.exit(0);;
+			System.exit(0);
 		break;
 		}
 		}

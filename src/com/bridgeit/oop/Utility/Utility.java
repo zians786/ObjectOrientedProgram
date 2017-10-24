@@ -195,10 +195,15 @@ public class Utility {
 		return array;
 	}
 
-	public static void addDoctors() {
+	public static void addDoctors() throws Exception {
+		JSONParser parser = new JSONParser();
+		JSONArray doctorArray = (JSONArray) parser.parse(
+				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
+		
+		
 		Scanner scanner = new Scanner(System.in);
 
-		JSONArray array = new JSONArray();
+		
 		JSONObject json = new JSONObject();
 
 		System.out.println("Enter I.D doctor");
@@ -217,15 +222,14 @@ public class Utility {
 		String available = scanner.next();
 		json.put("Doctor_Availiablity", available);
 
-		array.add(json);
+		doctorArray.add(json);
 
 		try {
 			FileWriter jsonFileWriter = new FileWriter(
 					"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json");
-			jsonFileWriter.write(array.toJSONString());
+			jsonFileWriter.write(doctorArray.toJSONString());
 			jsonFileWriter.flush();
 			jsonFileWriter.close();
-			System.out.println("Doctor Added:" + array);
 			System.out.println("Doctor has been added successfully.. :");
 
 		} catch (IOException e) {
@@ -233,11 +237,15 @@ public class Utility {
 		}
 	}
 
-	public static void addPatient() {
+	public static void addPatient() throws Exception {
+		JSONParser parser = new JSONParser();
+		JSONArray patientArray = (JSONArray) parser.parse(
+				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json"));
+		
+		
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter no. of Patient");
-
-		JSONArray array = new JSONArray();
+		
+		
 		JSONObject json1 = new JSONObject();
 
 		System.out.println("Enter patient ID. :");
@@ -256,17 +264,16 @@ public class Utility {
 		int age = scanner.nextInt();
 		json1.put("Patient_Age", age);
 
-		array.add(json1);
+		patientArray.add(json1);
 
 		try {
 			FileWriter jsonFileWriter = new FileWriter(
 					"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json");
-			jsonFileWriter.write(array.toJSONString());
+			jsonFileWriter.write(patientArray.toJSONString());
 			jsonFileWriter.flush();
 			jsonFileWriter.close();
 			System.out.println(" Patient has been added successfully...");
 
-			System.out.println("Pateint Added: " + array);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -277,20 +284,24 @@ public class Utility {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter Name or ID or Specialization or Availiablity Of the Doctor to find..");
 		String value = scanner.next();
+		boolean status=true;
 		try {
 			JSONParser parser = new JSONParser();
 			JSONArray array = (JSONArray) parser.parse(
 					new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
 			for (Object object : array) {
 				JSONObject jsonobject = (JSONObject) object;
-				if (value.equals((String) jsonobject.get("Patient_Name"))
+				if (value.equals((String) jsonobject.get("Doctor_Name"))
 						|| value.equals((String) jsonobject.get("Doctor_Availiablity"))
 						|| value.equals((String) jsonobject.get("Doctor_Specialization"))
 						|| value.equals(String.valueOf((long) jsonobject.get("Doctor_ID")))) {
 					System.out.println("Doctor_found " + jsonobject);
-				} else {
-					System.out.println("Doctor Not found..");
-				}
+					status=false;
+				} 
+				
+			}
+			if(status) {
+				System.out.println("Doctor Not found..");
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -301,6 +312,7 @@ public class Utility {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter Name or ID or Mobile Number or Age Of Patient to find..");
 		String value = scanner.next();
+		boolean status=true;
 		try {
 			JSONParser parser = new JSONParser();
 			JSONArray array = (JSONArray) parser.parse(
@@ -312,16 +324,20 @@ public class Utility {
 						|| value.equals(String.valueOf((long) jsonobject.get("Patient_MobileNumber")))
 						|| value.equals(String.valueOf((long) jsonobject.get("Patient_Age")))) {
 					System.out.println("Patient_found " + jsonobject);
-				} else {
-					System.out.println("Patient Not found..");
-				}
+					status=false;
+				} 
+			}
+			if(status) {
+				System.out.println("Patient Not found..");
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
 
-	public static void takeAnAppointment() throws Exception {
+	public  void takeAnAppointment() throws Exception {
+		StockAccount utility=new StockAccount();
+		boolean found=false;
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Please enter Patient_Name");
 		String patient_name = scanner.next();
@@ -330,49 +346,77 @@ public class Utility {
 		System.out.println("Enter the date : e.g dd-MM-yyyy");
 		String stringDate = scanner.next();
 
-		String doctorInfo = null;
-
 		JSONParser parser = new JSONParser();
-		JSONArray array = (JSONArray) parser.parse(
+		JSONArray doctorArray = (JSONArray) parser.parse(
 				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
 		JSONArray appointArray = (JSONArray) parser.parse(
 				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/appointment.json"));
-		
-		boolean status = true;
-		for (int i = 0; i < array.size(); i++) {
-			JSONObject obj = (JSONObject) array.get(i);
+
+		boolean doctorExistStatus = true, doctorInAppoint = true;
+
+		for (Object object1:doctorArray) {
+			JSONObject obj = (JSONObject) object1;
 			String doctorName = (String) obj.get("Doctor_Name");
+			String appointDate = (String) obj.get("date");
 
 			if (doctorName.equals(doctername)) {
-				for(int j=0;j<appointArray.size();j++){
-					JSONObject appObject = (JSONObject) array.get(i);
-					String  = (String) appObj.get("Doctor_Name");
+				doctorExistStatus = false;
+
+				for(Object object:appointArray) {
+					JSONObject appObject = (JSONObject) object;
+					String dName = (String) appObject.get("Doctor_Name");
+					Object appDate =  appObject.get("date");
+					if (dName.equals(doctername)) {
+						doctorInAppoint = false;
+						found=true;
+						if (appDate.equals(stringDate)) {
+							if (6 > (long) appObject.get("appointNumbers")) {
+								JSONObject patientObject = new JSONObject();
+								patientObject.put("name", patient_name);
+								appObject.put("Patient_Detail", patientObject);
+								long appointmentNumber = (long) appObject.get("appointNumbers");
+								appObject.replace("appointNumbers", appointmentNumber + 1);
+							} else {
+								System.out.println("Sorry Appointment List is Full Please Select Different date");
+							}
+						} else {
+							JSONArray patientArray = new JSONArray();
+							JSONObject appointObject = new JSONObject();
+							JSONObject patientObject = new JSONObject();
+							appointObject.put("Doctor_Name", doctername);
+							patientObject.put("name", patient_name);
+							patientObject.put("number", 1);
+							patientArray.add(patientObject);
+							appointObject.put("Patient_Detail", patientArray);
+							appointObject.put("date", appointDate);
+							appointObject.put("appointNumbers", 1);
+							appointArray.add(patientObject);
+						}
+					}
 
 				}
-				doctorInfo = doctorName;
-				JSONArray appointmentFileObj = new JSONArray();
-
-				JSONObject obj1 = new JSONObject();
-
-				obj1.put("Doctor_Name", doctorInfo);
-
-				obj1.put("Patient_Name", patient_name);
-				obj1.put("Booking Date ", (stringDate));
-				appointmentFileObj.add(obj1);
-				FileWriter filewriter = new FileWriter(
-						"/home/bridgeit/eclipse-workspace/OppsPrograms/src/com/bridgelabz/utility/appointment.json");
-				filewriter.write(appointmentFileObj.toJSONString());
-				filewriter.flush();
-				filewriter.close();
-				status = false;
-				System.out.println("hello " + patient_name + " Your Appointment is fixed  With Doctor " + doctorInfo
-						+ " For: " + (stringDate));
+				if (doctorInAppoint) {
+					JSONArray patientArray = new JSONArray();
+					JSONObject appointObject = new JSONObject();
+					JSONObject patientObject = new JSONObject();
+					appointObject.put("Doctor_Name", doctername);
+					patientObject.put("name", patient_name);
+					patientObject.put("number", 1);
+					patientArray.add(patientObject);
+					appointObject.put("Patient_Detail", patientArray);
+					appointObject.put("date", appointDate);
+					appointObject.put("appointNumbers", 1);
+					appointArray.add(patientObject);
+				}
 
 			}
 		}
-		if (status) {
+		if (doctorExistStatus) {
 			System.out.println("doctors not found in this name");
+
 		}
+if(found==true)		
+utility.save(appointArray,"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/appointment.json");
 	}
 
 	public void stringToDate(String dat) throws ParseException {
