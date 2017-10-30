@@ -22,7 +22,7 @@ public class StockAccount {
 	public StockAccount(String userName) throws Exception {
 		Scanner scanner = new Scanner(System.in);
 		FileReader fileReader = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		JSONArray jsonArray = (JSONArray) new JSONParser().parse(fileReader);
 		boolean status = true;
 		for (Object object : jsonArray) {
@@ -45,7 +45,7 @@ public class StockAccount {
 			user.put("number", number);
 			jsonArray.add(user);
 			save(jsonArray,
-					"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+					"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 			System.out.println("User With Name '" + userName + "', Added Successfully..");
 
 		} else {
@@ -56,9 +56,9 @@ public class StockAccount {
 	public void buy(int amount, String symbol) throws Exception {
 		Scanner scanner = new Scanner(System.in);
 		FileReader userFile = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		FileReader companyFile = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 		JSONArray userArray = (JSONArray) new JSONParser().parse(userFile);
 		JSONArray companyArray = (JSONArray) new JSONParser().parse(companyFile);
 		boolean status = false;
@@ -113,17 +113,17 @@ public class StockAccount {
 			System.out.println("You Dont have Enough amount to perform this transaction..");
 		}
 
-		save(userArray, "/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+		save(userArray, "/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		save(companyArray,
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 	}
 
 	public void sell(int amount, String symbol) throws Exception {
 		Scanner scanner = new Scanner(System.in);
 		FileReader userFile = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		FileReader companyFile = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 		JSONArray userArray = (JSONArray) new JSONParser().parse(userFile);
 		JSONArray companyArray = (JSONArray) new JSONParser().parse(companyFile);
 		boolean status = false;
@@ -181,9 +181,9 @@ public class StockAccount {
 			System.out.println("You Dont have Enough amount to perform this transaction..");
 		}
 
-		save(userArray, "/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+		save(userArray, "/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		save(companyArray,
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 	}
 
 	public void save(Object jsonArray, String file) throws Exception {
@@ -197,7 +197,7 @@ public class StockAccount {
 
 	public void printReport() throws Exception {
 		FileReader fileReader = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/user_stock_details.json");
 		JSONArray jsonArray = (JSONArray) new JSONParser().parse(fileReader);
 		System.out.println("****** USER DETAILS ******");
 		for (Object object : jsonArray) {
@@ -219,7 +219,7 @@ public class StockAccount {
 		System.out.println();
 
 		FileReader fileReader1 = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 		JSONArray jsonArray1 = (JSONArray) new JSONParser().parse(fileReader1);
 		System.out.println("****** COMPANY STOCK REPORT ******");
 		System.out.println("------------------------------------------------------------------");

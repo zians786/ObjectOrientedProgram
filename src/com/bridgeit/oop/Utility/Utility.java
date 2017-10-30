@@ -1,6 +1,7 @@
 package com.bridgeit.oop.Utility;
 
 import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -74,7 +75,7 @@ public class Utility {
 		}
 
 		FileWriter fileWriter = new FileWriter(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/stock_report.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/stock_report.json");
 		fileWriter.write(jsonArray.toJSONString());
 		fileWriter.flush();
 		fileWriter.close();
@@ -82,7 +83,7 @@ public class Utility {
 
 	public void readStock() throws Exception {
 		FileReader fileReader = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/stock_report.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/stock_report.json");
 		JSONArray jsonArray = (JSONArray) new JSONParser().parse(fileReader);
 		int total = 0;
 		for (Object o : jsonArray) {
@@ -111,7 +112,7 @@ public class Utility {
 	public void addInventory() throws Exception {
 		Scanner scanner = new Scanner(System.in);
 		Object data = new JSONParser().parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json"));
 
 		JSONArray inventory = (JSONArray) data;
 		JSONObject inventObject = new JSONObject();
@@ -125,7 +126,7 @@ public class Utility {
 		inventory.add(inventObject);
 
 		FileWriter fileWriter = new FileWriter(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json");
 		fileWriter.write(inventory.toJSONString());
 		fileWriter.flush();
 		fileWriter.close();
@@ -134,7 +135,7 @@ public class Utility {
 
 	public void totalInventory() throws Exception {
 		Object data = new JSONParser().parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json"));
 
 		JSONArray inventory = (JSONArray) data;
 		System.out.println("Enter Inventory name..");
@@ -163,7 +164,7 @@ public class Utility {
 
 	public void inventoryReport() throws Exception {
 		Object data = new JSONParser().parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/Inventory.json"));
 
 		JSONArray inventory = (JSONArray) data;
 
@@ -198,7 +199,7 @@ public class Utility {
 	public static void addDoctors() throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONArray doctorArray = (JSONArray) parser.parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
 		
 		
 		Scanner scanner = new Scanner(System.in);
@@ -226,7 +227,7 @@ public class Utility {
 
 		try {
 			FileWriter jsonFileWriter = new FileWriter(
-					"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json");
+					"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json");
 			jsonFileWriter.write(doctorArray.toJSONString());
 			jsonFileWriter.flush();
 			jsonFileWriter.close();
@@ -240,7 +241,7 @@ public class Utility {
 	public static void addPatient() throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONArray patientArray = (JSONArray) parser.parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json"));
 		
 		
 		Scanner scanner = new Scanner(System.in);
@@ -268,7 +269,7 @@ public class Utility {
 
 		try {
 			FileWriter jsonFileWriter = new FileWriter(
-					"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json");
+					"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json");
 			jsonFileWriter.write(patientArray.toJSONString());
 			jsonFileWriter.flush();
 			jsonFileWriter.close();
@@ -288,7 +289,7 @@ public class Utility {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONArray array = (JSONArray) parser.parse(
-					new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
+					new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
 			for (Object object : array) {
 				JSONObject jsonobject = (JSONObject) object;
 				if (value.equals((String) jsonobject.get("Doctor_Name"))
@@ -316,7 +317,7 @@ public class Utility {
 		try {
 			JSONParser parser = new JSONParser();
 			JSONArray array = (JSONArray) parser.parse(
-					new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json"));
+					new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/patient.json"));
 			for (Object object : array) {
 				JSONObject jsonobject = (JSONObject) object;
 				if (value.equals((String) jsonobject.get("Patient_Name"))
@@ -348,9 +349,9 @@ public class Utility {
 
 		JSONParser parser = new JSONParser();
 		JSONArray doctorArray = (JSONArray) parser.parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/doctor.json"));
 		JSONArray appointArray = (JSONArray) parser.parse(
-				new FileReader("/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/appointment.json"));
+				new FileReader("/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/appointment.json"));
 
 		boolean doctorExistStatus = true, doctorInAppoint = true;
 
@@ -416,7 +417,7 @@ public class Utility {
 
 		}
 if(found==true)		
-utility.save(appointArray,"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/appointment.json");
+utility.save(appointArray,"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/appointment.json");
 	}
 
 	public void stringToDate(String dat) throws ParseException {

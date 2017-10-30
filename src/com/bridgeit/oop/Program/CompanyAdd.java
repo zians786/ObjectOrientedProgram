@@ -20,7 +20,7 @@ public class CompanyAdd {
 		Scanner scanner = new Scanner(System.in);
 		LinkedListUtility linkCompany = new LinkedListUtility();
 		FileReader fileReader1 = new FileReader(
-				"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+				"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 		JSONArray jsonArray1 = (JSONArray) new JSONParser().parse(fileReader1);
 
 		for (Object object1 : jsonArray1) {
@@ -49,7 +49,7 @@ public class CompanyAdd {
 				break;
 			case 4:
 				account.writeToJSON(linkCompany,
-						"/root/workspace/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
+						"/home/bridgeit/Desktop/ziauddin/ObjectOrientedProgram/src/com/bridgeit/oop/Utility/company_stock_details.json");
 				break;
 			case 5:
 				System.exit(0);
